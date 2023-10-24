@@ -12,32 +12,34 @@ const coursesRoute = Router();
  *        description: Get all courses
  *        content: 
  *          application/json:
- *            schema: 
- *              type: object
- *              properties: 
- *                id:
- *                  type: number
- *                  example: 8693
- *                name:
- *                  type: string
- *                  example: Duis mollit reprehenderit ad
- *                description:
- *                  type: string
- *                  example: Est minim ea aute sunt laborum minim eu excepteur. Culpa sint exercitation mollit enim ad culpa aliquip laborum cillum. Dolor officia culpa labore ex eiusmod ut est ea voluptate ea nostrud.
- *                authors:
- *                  type: array
- *                  items:
- *                    type: object
- *                    properties: 
- *                      id: 
- *                        type: number
- *                        example: 1370
- *                      name: 
- *                        type: string
- *                        example: Polly Sosa
- *                duration:
- *                  type: number
- *                  example: 157
+ *            schema:
+ *              type: array
+ *              items: 
+ *                type: object
+ *                properties: 
+ *                  id:
+ *                    type: number
+ *                    example: 8693
+ *                  name:
+ *                    type: string
+ *                    example: Duis mollit reprehenderit ad
+ *                  description:
+ *                    type: string
+ *                    example: Est minim ea aute sunt laborum minim eu excepteur. Culpa sint exercitation mollit enim ad culpa aliquip laborum cillum. Dolor officia culpa labore ex eiusmod ut est ea voluptate ea nostrud.
+ *                  authors:
+ *                    type: array
+ *                    items:
+ *                      type: object
+ *                      properties: 
+ *                        id: 
+ *                          type: number
+ *                          example: 1370
+ *                        name: 
+ *                          type: string
+ *                          example: Polly Sosa
+ *                  duration:
+ *                    type: number
+ *                    example: 157
  *      404:
  *        description: Page is not found
  *        content: 

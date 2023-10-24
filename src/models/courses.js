@@ -1,4 +1,4 @@
-[
+export const courses = [
   {
     "id": 8693,
     "name": "Duis mollit reprehenderit ad",

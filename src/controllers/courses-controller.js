@@ -1,4 +1,4 @@
-import courses from '../models/courses.json' assert { type: "json" };
+import {courses} from '../models/courses.js';
 const data = {
   courses,
   setCourses: function (newCourse) {this.courses = newCourse}

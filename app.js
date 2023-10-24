@@ -1,13 +1,11 @@
 import express from 'express';
-import {healthCheckRoute} from './src/routes/api/health-check.js';
-import {coursesRoute} from './src/routes/api/courses-routes.js'
-
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
+import {healthCheckRoute} from './src/routes/api/health-check.js';
+import {coursesRoute} from './src/routes/api/courses-routes.js'
 import { generalErrorHandler } from './src/error-handlers/general-error-handler.js';
 import { notFoundHandler } from './src/error-handlers/not-found-handler.js';
-
 import swaggerOptions from './src/swagger/swagger-options.js';
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
