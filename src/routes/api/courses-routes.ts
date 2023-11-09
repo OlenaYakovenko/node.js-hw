@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { createNewCourse, getAllCourses } from "../../controllers/courses-controller.js";
+import { Router } from 'express';
+import { createNewCourse, getAllCourses } from '../../controllers/courses-controller.js';
 const coursesRoute = Router();
 
 /**
@@ -10,13 +10,13 @@ const coursesRoute = Router();
  *    responses:
  *      200:
  *        description: Get all courses
- *        content: 
+ *        content:
  *          application/json:
  *            schema:
  *              type: array
- *              items: 
+ *              items:
  *                type: object
- *                properties: 
+ *                properties:
  *                  id:
  *                    type: number
  *                    example: 8693
@@ -30,11 +30,11 @@ const coursesRoute = Router();
  *                    type: array
  *                    items:
  *                      type: object
- *                      properties: 
- *                        id: 
+ *                      properties:
+ *                        id:
  *                          type: number
  *                          example: 1370
- *                        name: 
+ *                        name:
  *                          type: string
  *                          example: Polly Sosa
  *                  duration:
@@ -42,28 +42,28 @@ const coursesRoute = Router();
  *                    example: 157
  *      404:
  *        description: Page is not found
- *        content: 
+ *        content:
  *          application/json:
- *            schema: 
+ *            schema:
  *              type: object
- *              properties: 
+ *              properties:
  *                status:
  *                  type: string
  *                  example: 404
- *                message: 
+ *                message:
  *                  type: string
  *                  example: Can't find this page
  *      500:
  *        description: Internal server error
- *        content: 
+ *        content:
  *          application/json:
- *            schema: 
+ *            schema:
  *              type: object
- *              properties: 
+ *              properties:
  *                status:
  *                  type: string
  *                  example: 500
- *                message: 
+ *                message:
  *                  type: string
  *                  example: Internal server error
  *  post:
@@ -92,11 +92,11 @@ const coursesRoute = Router();
  *                description: New course authors
  *                items:
  *                  type: object
- *                  properties: 
- *                    id: 
+ *                  properties:
+ *                    id:
  *                      type: number
  *                      example: 1370
- *                    name: 
+ *                    name:
  *                      type: string
  *                      example: Polly Sosa
  *              duration:
@@ -106,11 +106,11 @@ const coursesRoute = Router();
  *    responses:
  *      201:
  *        description: New course created
- *        content: 
+ *        content:
  *          application/json:
- *            schema: 
+ *            schema:
  *              type: object
- *              properties: 
+ *              properties:
  *                status:
  *                  type: string
  *                  example: success
@@ -120,46 +120,44 @@ const coursesRoute = Router();
  *      400:
  *        description: Parameter is required
  *        content:
- *          application/json: 
- *            schema: 
+ *          application/json:
+ *            schema:
  *              type: object
- *              properties: 
+ *              properties:
  *                status:
  *                  type: string
  *                  example: 400
- *                message: 
+ *                message:
  *                  type: string
  *                  example: Parameter is required
  *      404:
  *        description: Page is not found
- *        content: 
+ *        content:
  *          application/json:
- *            schema: 
+ *            schema:
  *              type: object
- *              properties: 
+ *              properties:
  *                status:
  *                  type: string
  *                  example: 404
- *                message: 
+ *                message:
  *                  type: string
  *                  example: Can't find this page
  *      500:
  *        description: Internal server error
- *        content: 
+ *        content:
  *          application/json:
- *            schema: 
+ *            schema:
  *              type: object
- *              properties: 
+ *              properties:
  *                status:
  *                  type: string
  *                  example: 500
- *                message: 
+ *                message:
  *                  type: string
  *                  example: Internal server error
  */
 
-coursesRoute.route('/')
-  .get(getAllCourses)
-  .post(createNewCourse)
+coursesRoute.route('/').get(getAllCourses).post(createNewCourse);
 
-export {coursesRoute}
+export { coursesRoute };
