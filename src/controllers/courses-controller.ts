@@ -1,62 +1,73 @@
-import { Request, Response } from 'express';
-import { Course } from '../models/course-interface.js';
-import { courses } from '../models/courses.js';
+import { NextFunction, Request, Response } from 'express';
 
-const data = {
-  courses,
-  setCourses: function (newCourse: Course[]) {
-    this.courses = newCourse;
-  },
+import { Course, ICourse } from '../models/Course.js';
+import { IError } from '../error-handlers/general-error-handler.js';
+
+const getAllCourses = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const courses = await Course.find();
+    res.status(200).json(courses);
+  } catch (error) {
+    next(error);
+  }
 };
 
-const getAllCourses = (req: Request, res: Response) => {
-  res.status(200).json(data.courses);
+const createNewCourse = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    if (!req.body.name) {
+      const error: IError = new Error('Course name is required.');
+      error.statusCode = 400;
+      error.status = 'failed';
+      throw error;
+    }
+    if (!req.body.description) {
+      const error: IError = new Error('Course description is required.');
+      error.statusCode = 400;
+      error.status = 'failed';
+      throw error;
+    }
+    if (!req.body.authors) {
+      const error: IError = new Error('Course authors field is required.');
+      error.statusCode = 400;
+      error.status = 'failed';
+      throw error;
+    }
+    if (!req.body.duration) {
+      const error: IError = new Error('Course duration is required.');
+      error.statusCode = 400;
+      error.status = 'failed';
+      throw error;
+    }
+    const newCourse: ICourse = await Course.create({
+      name: req.body.name,
+      description: req.body.description,
+      authors: req.body.authors,
+      duration: req.body.duration,
+    });
+    res.status(201).json(newCourse);
+  } catch (error) {
+    next(error);
+  }
 };
 
-const createNewCourse = (req: Request, res: Response) => {
-  const newCourse: Course = {
-    id: req.body.id,
-    name: req.body.name,
-    description: req.body.description,
-    authors: req.body.authors,
-    duration: req.body.duration,
-  };
-  if (!newCourse.id) {
-    return res.status(400).json({
-      status: 'failed',
-      message: 'ID is required.',
-    });
+const updateCourse = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) {
+      const error: IError = new Error('Course is not found');
+      error.statusCode = 400;
+      error.status = 'failed';
+      throw error;
+    }
+    const updatedCourse = await Course.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: { ...req.body } },
+      { new: true, runValidators: true },
+    );
+    res.status(200).json(updatedCourse);
+  } catch (error) {
+    next(error);
   }
-  if (!newCourse.name) {
-    return res.status(400).json({
-      status: 'failed',
-      message: 'Course name is required.',
-    });
-  }
-  if (!newCourse.description) {
-    return res.status(400).json({
-      status: 'failed',
-      message: 'Course description is required.',
-    });
-  }
-  if (!newCourse.authors) {
-    return res.status(400).json({
-      status: 'failed',
-      message: 'Course authors are required.',
-    });
-  }
-  if (!newCourse.duration) {
-    return res.status(400).json({
-      status: 'failed',
-      message: 'Course duration is required.',
-    });
-  }
-
-  data.setCourses([...data.courses, newCourse]);
-  res.status(201).json({
-    status: 'success',
-    message: 'New course is created',
-  });
 };
 
-export { getAllCourses, createNewCourse };
+export { getAllCourses, createNewCourse, updateCourse };
