@@ -1,5 +1,8 @@
 import { Router } from 'express';
+
 import { addAuthor, getAllAuthors } from '../../controllers/author-controller.js';
+import { validateRequest } from '../../middleware/validate-request.js';
+import { newAuthorSchema } from '../../validation-schemas/author-schema.js';
 
 /**
  * @swagger
@@ -110,4 +113,4 @@ import { addAuthor, getAllAuthors } from '../../controllers/author-controller.js
  *              message: Internal server error
  */
 export const authorRouter = Router();
-authorRouter.route('/').get(getAllAuthors).post(addAuthor);
+authorRouter.route('/').get(getAllAuthors).post(newAuthorSchema, validateRequest, addAuthor);

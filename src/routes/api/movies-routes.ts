@@ -1,4 +1,6 @@
 import { Router } from 'express';
+
+import { validateRequest } from '../../middleware/validate-request.js';
 import {
   addMovie,
   deleteMovie,
@@ -6,6 +8,9 @@ import {
   getAllMovies,
   updateMovie,
 } from '../../controllers/movies-controller.js';
+import { movieGenreSchema, newMovieSchema } from '../../validation-schemas/movie-schema.js';
+import { idSchema } from '../../validation-schemas/id-schema.js';
+import { Movie } from '../../models/Movie.js';
 
 const moviesRouter = Router();
 
@@ -295,8 +300,11 @@ const moviesRouter = Router();
  *              message: Internal server error
  */
 
-moviesRouter.route('/').get(getAllMovies).post(addMovie);
-moviesRouter.route('/:id').delete(deleteMovie).put(updateMovie);
-moviesRouter.route('/genre/:genreName').get(findMovieByGenre);
+moviesRouter.route('/').get(getAllMovies).post(newMovieSchema, validateRequest, addMovie);
+moviesRouter
+  .route('/:id')
+  .delete(idSchema(Movie), validateRequest, deleteMovie)
+  .put(idSchema(Movie), newMovieSchema, validateRequest, updateMovie);
+moviesRouter.route('/genre/:genreName').get(movieGenreSchema, validateRequest, findMovieByGenre);
 
 export { moviesRouter };

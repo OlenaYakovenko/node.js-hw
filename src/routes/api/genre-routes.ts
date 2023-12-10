@@ -1,6 +1,10 @@
 import { Router } from 'express';
 
 import { addGenre, deleteGenre, getAllGenres, updateGenre } from '../../controllers/genre-controller.js';
+import { validateRequest } from '../../middleware/validate-request.js';
+import { Genre } from '../../models/Genre.js';
+import { newGenreSchema } from '../../validation-schemas/genre-schema.js';
+import { idSchema } from '../../validation-schemas/id-schema.js';
 
 export const genresRouter = Router();
 
@@ -220,5 +224,8 @@ export const genresRouter = Router();
  *              message: Internal server error
  */
 
-genresRouter.route('/').get(getAllGenres).post(addGenre);
-genresRouter.route('/:id').delete(deleteGenre).put(updateGenre);
+genresRouter.route('/').get(getAllGenres).post(newGenreSchema, validateRequest, addGenre);
+genresRouter
+  .route('/:id')
+  .delete(idSchema(Genre), validateRequest, deleteGenre)
+  .put(idSchema(Genre), newGenreSchema, validateRequest, updateGenre);

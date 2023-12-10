@@ -1,5 +1,10 @@
 import { Router } from 'express';
+
 import { createNewCourse, getAllCourses, updateCourse } from '../../controllers/courses-controller.js';
+import { validateRequest } from '../../middleware/validate-request.js';
+import { Course } from '../../models/Course.js';
+import { newCourseSchema } from '../../validation-schemas/course-schema.js';
+import { idSchema } from '../../validation-schemas/id-schema.js';
 const coursesRouter = Router();
 
 /**
@@ -240,7 +245,7 @@ const coursesRouter = Router();
  *                message: Internal server error
  */
 
-coursesRouter.route('/').get(getAllCourses).post(createNewCourse);
-coursesRouter.route('/:id').put(updateCourse);
+coursesRouter.route('/').get(getAllCourses).post(newCourseSchema, validateRequest, createNewCourse);
+coursesRouter.route('/:id').put(idSchema(Course), newCourseSchema, validateRequest, updateCourse);
 
 export { coursesRouter };
